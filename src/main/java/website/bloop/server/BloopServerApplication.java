@@ -1,8 +1,13 @@
 package website.bloop.server;
 
+import org.skife.jdbi.v2.DBI;
+
 import io.dropwizard.Application;
+import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import website.bloop.server.jdbi.FlagDAO;
+import website.bloop.server.resources.FlagResource;
 
 public class BloopServerApplication extends Application<BloopServerConfiguration> {
 
@@ -23,7 +28,10 @@ public class BloopServerApplication extends Application<BloopServerConfiguration
     @Override
     public void run(final BloopServerConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
+        final DBIFactory factory = new DBIFactory();
+        final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
+        final FlagDAO flagDAO = jdbi.onDemand(FlagDAO.class);
+        
+        environment.jersey().register(new FlagResource(flagDAO));
     }
-
 }
