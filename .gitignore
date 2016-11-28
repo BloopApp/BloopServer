@@ -2,5 +2,4 @@
 
 /.settings/
 .classpath
-config.yml
 dependency-reduced-pom.xml
