@@ -7,7 +7,10 @@ import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import website.bloop.server.jdbi.FlagDAO;
+import website.bloop.server.jdbi.NearbyFlagDAO;
+import website.bloop.server.jdbi.PlayerDAO;
 import website.bloop.server.resources.FlagResource;
+import website.bloop.server.resources.PlayerResource;
 
 public class BloopServerApplication extends Application<BloopServerConfiguration> {
 
@@ -31,7 +34,10 @@ public class BloopServerApplication extends Application<BloopServerConfiguration
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
         final FlagDAO flagDAO = jdbi.onDemand(FlagDAO.class);
+        final NearbyFlagDAO nearbyFlagDAO = jdbi.onDemand(NearbyFlagDAO.class);
+        final PlayerDAO playerDAO = jdbi.onDemand(PlayerDAO.class);
         
-        environment.jersey().register(new FlagResource(flagDAO));
+        environment.jersey().register(new FlagResource(flagDAO, nearbyFlagDAO, playerDAO));
+        environment.jersey().register(new PlayerResource(playerDAO));
     }
 }
