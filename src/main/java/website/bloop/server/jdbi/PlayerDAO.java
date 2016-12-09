@@ -9,7 +9,10 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import website.bloop.server.api.Player;
 
 public interface PlayerDAO {
-	@SqlUpdate("INSERT INTO player (name) VALUES (:name)")
+	@SqlUpdate("INSERT INTO player (name, google_play_id) " +
+			   "SELECT :name, :googlePlayId " +
+			   "WHERE NOT EXISTS " +
+			   "(SELECT 1 FROM player WHERE google_play_id = :googlePlayId)")
 	@GetGeneratedKeys
 	int addPlayer(@BindBean Player player);
 	

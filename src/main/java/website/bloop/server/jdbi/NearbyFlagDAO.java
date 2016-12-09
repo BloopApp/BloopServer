@@ -11,7 +11,8 @@ import website.bloop.server.api.PlayerLocation;
 public interface NearbyFlagDAO {
 
 	@SqlQuery("SELECT st_distance(location, st_setsrid(st_makepoint(:latitude, :longitude), 4326)) AS distance, flag_id " +
-			  "FROM flag WHERE is_captured = FALSE AND player_id != :playerId " +
-			  "ORDER BY d LIMIT 1")
+			  "FROM flag WHERE is_captured = FALSE AND player_id != " +
+			  "(SELECT player_id FROM player WHERE google_play_id = :googlePlayId) " +
+			  "ORDER BY distance LIMIT 1")
 	NearbyFlag getNearestFlag(@BindBean PlayerLocation location);
 }

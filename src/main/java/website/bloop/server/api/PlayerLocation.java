@@ -8,7 +8,7 @@ public class PlayerLocation {
 	
 	@NotNull
 	@JsonProperty
-	private long playerId;
+	private String googlePlayId;
 	
 	@NotNull
 	@JsonProperty
@@ -20,12 +20,12 @@ public class PlayerLocation {
 	
 	public PlayerLocation() { }
 
-	public long getPlayerId() {
-		return playerId;
+	public String getGooglePlayId() {
+		return googlePlayId;
 	}
 
-	public void setPlayerId(long playerId) {
-		this.playerId = playerId;
+	public void setGooglePlayId(String playerId) {
+		this.googlePlayId = playerId;
 	}
 
 	public double getLatitude() {

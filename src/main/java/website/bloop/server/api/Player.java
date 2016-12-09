@@ -12,12 +12,17 @@ public class Player {
 	@JsonProperty
 	private String name;
 	
+	@NotNull
+	@JsonProperty
+	private String googlePlayId;
+	
 	public Player() { }
 	
-	public Player(long playerId, String name) {
+	public Player(long playerId, String name, String googlePlayId) {
 		super();
 		this.playerId = playerId;
 		this.name = name;
+		this.googlePlayId = googlePlayId;
 	}
 
 	public long getPlayerId() {
@@ -34,5 +39,13 @@ public class Player {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getGooglePlayId() {
+		return googlePlayId;
+	}
+
+	public void setGooglePlayId(String googlePlayId) {
+		this.googlePlayId = googlePlayId;
 	}
 }

@@ -32,8 +32,8 @@ public class FlagResource {
 	
 	@POST
 	@Path("/place")
-	public int addFlag(Flag flag) {
-		return flagDAO.insertFlag(flag);
+	public int addFlag(PlayerLocation location) {
+		return flagDAO.insertFlag(location);
 	}
 	
 	@GET
@@ -46,15 +46,20 @@ public class FlagResource {
 	@Path("/nearby")
 	public NearbyFlag getNearestFlag(@Valid PlayerLocation location) {
 		NearbyFlag flag = nearbyFlagDAO.getNearestFlag(location);
-		if (flag.getBloopFrequency() == NearbyFlag.MAX_FREQUENCY) {
-			flag.setPlayerName(playerDAO.getPlayerName(flag.getFlagId()));
+		if (flag != null) {
+			if (flag.getBloopFrequency() == NearbyFlag.MAX_FREQUENCY) {
+				flag.setPlayerName(playerDAO.getPlayerName(flag.getFlagId()));
+			}
+		} else {
+			flag = new NearbyFlag();
+			flag.setBloopFrequency(0);
 		}
 		return flag;
 	}
 	
 	@POST
 	@Path("/capture")
-	public void captureFlag(@Valid Flag flag) {
+	public void captureFlag(@Valid NearbyFlag flag) {
 		flagDAO.captureFlag(flag);
 	}
 }

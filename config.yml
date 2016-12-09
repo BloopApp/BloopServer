@@ -6,11 +6,11 @@ logging:
 server:
   applicationConnectors:
     - type: http
-      port: 8081
+      port: 8080
 
   adminConnectors:
     - type: http
-      port: 8082
+      port: 8081
 
   rootPath: /api/*
 

@@ -10,6 +10,6 @@ import website.bloop.server.api.NearbyFlag;
 
 public class NearbyFlagMapper implements ResultSetMapper<NearbyFlag> {
 	public NearbyFlag map(int index, ResultSet r, StatementContext ctx) throws SQLException {
-		return new NearbyFlag(r.getDouble("distance"), r.getLong("flagId"));
+		return new NearbyFlag(r.getDouble("distance"), r.getLong("flag_id"));
 	}
 }

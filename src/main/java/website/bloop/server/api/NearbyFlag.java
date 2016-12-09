@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NearbyFlag {
 	public static final int CAPTURE_DISTANCE = 10;
-	public static final int MAX_FREQUENCY = 10;
+	public static final double MAX_FREQUENCY = 10;
 	public static final int MAX_DISTANCE = 1000;
+	public static final double MIN_FREQUENCY = CAPTURE_DISTANCE * MAX_FREQUENCY / MAX_DISTANCE;
 	
 	@JsonProperty
     private double bloopFrequency;
@@ -15,6 +16,9 @@ public class NearbyFlag {
 
     @JsonProperty
     private String playerName;
+    
+    @JsonProperty
+    private String capturingPlayerId;
 
     public NearbyFlag(double distance, long flagId) {
         this.bloopFrequency = calculateBloopFrequency(distance);

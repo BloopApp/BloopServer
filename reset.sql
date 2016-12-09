@@ -12,6 +12,7 @@ CREATE TABLE player
 (
 	player_id bigserial,
 	"name" text NOT NULL,
+	google_play_id text NOT NULL,
 	CONSTRAINT player_pk
 		PRIMARY KEY (player_id)
 );

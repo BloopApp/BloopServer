@@ -10,6 +10,6 @@ import website.bloop.server.api.Player;
 
 public class PlayerMapper implements ResultSetMapper<Player> {
 	public Player map(int index, ResultSet r, StatementContext ctx) throws SQLException {
-		return new Player(r.getLong("player_id"), r.getString("name"));
+		return new Player(r.getLong("player_id"), r.getString("name"), r.getString("google_play_id"));
 	}
 }

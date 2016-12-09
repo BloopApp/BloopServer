@@ -8,6 +8,8 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 
 import website.bloop.server.api.Flag;
+import website.bloop.server.api.NearbyFlag;
+import website.bloop.server.api.PlayerLocation;
 
 @RegisterMapper(FlagMapper.class)
 public interface FlagDAO {
@@ -16,14 +18,16 @@ public interface FlagDAO {
 	Flag getFlag(@Bind("flagId") int id);
 	
 	@SqlUpdate("INSERT INTO flag (player_id, location) " +
-			   "VALUES (:playerId, st_setsrid(st_makepoint(:latitude, :longitude), 4326))")
+			   "VALUES ((SELECT player_id FROM player WHERE google_play_id = :googlePlayId), " +
+			   "st_setsrid(st_makepoint(:latitude, :longitude), 4326))")
 	@GetGeneratedKeys
-	int insertFlag(@BindBean Flag flag);
+	int insertFlag(@BindBean PlayerLocation location);
 	
 	@SqlUpdate("UPDATE flag SET (is_captured, time_captured, capturing_player_id) = " +
-			   "(TRUE, now(), :capturingPlayerId) " +
+			   "(TRUE, now(), " +
+			   "(SELECT player_id FROM player WHERE google_play_id = :capturingPlayerId)) " +
 			   "WHERE flag_id = :flagId")
-	void captureFlag(@BindBean Flag flag);
+	void captureFlag(@BindBean NearbyFlag flag);
 	
 	@SqlUpdate("UPDATE flag SET (location) = " +
 			   "(st_setsrid(st_makepoint(:latitude, :longitude), 4326)) " +
