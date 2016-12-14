@@ -1,6 +1,5 @@
 /target/
-/ssl/
 /.settings/
 .classpath
 dependency-reduced-pom.xml
-config.yml
+
