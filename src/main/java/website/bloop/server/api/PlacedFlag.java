@@ -4,28 +4,38 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class PlayerLocation {
-    
+public class PlacedFlag {
     @NotNull
     @JsonProperty
     private String googlePlayId;
-    
+
     @NotNull
     @JsonProperty
     private double latitude;
-    
+
     @NotNull
     @JsonProperty
     private double longitude;
-    
-    public PlayerLocation() { }
+
+    @NotNull
+    @JsonProperty
+    private int color;
+
+    public PlacedFlag(String googlePlayId, double latitude, double longitude, int color) {
+        this.googlePlayId = googlePlayId;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.color = color;
+    }
+
+    public PlacedFlag() { }
 
     public String getGooglePlayId() {
         return googlePlayId;
     }
 
-    public void setGooglePlayId(String playerId) {
-        this.googlePlayId = playerId;
+    public void setGooglePlayId(String googlePlayId) {
+        this.googlePlayId = googlePlayId;
     }
 
     public double getLatitude() {
@@ -42,5 +52,13 @@ public class PlayerLocation {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }
