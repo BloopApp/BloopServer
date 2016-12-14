@@ -16,6 +16,10 @@ public interface PlayerDAO {
 	@GetGeneratedKeys
 	int addPlayer(@BindBean Player player);
 	
+	@SqlUpdate("UPDATE player SET firebase_token = :firebaseToken " +
+			   "WHERE google_play_id = :googlePlayId")
+	void updateFirebaseToken(@Bind("firebaseToken") Player player);
+	
 	@SqlQuery("SELECT name FROM player JOIN flag USING (player_id) " +
 			  "WHERE flag_id = :flagId")
 	String getPlayerName(@Bind("flagId") long flagId);

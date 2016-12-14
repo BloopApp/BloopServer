@@ -16,9 +16,6 @@ public class NearbyFlag {
 
     @JsonProperty
     private String playerName;
-    
-    @JsonProperty
-    private String capturingPlayerId;
 
     public NearbyFlag(double distance, long flagId) {
         this.bloopFrequency = calculateBloopFrequency(distance);
@@ -50,8 +47,8 @@ public class NearbyFlag {
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
-    
-    public double calculateBloopFrequency(double distance) {
+
+	public double calculateBloopFrequency(double distance) {
     	if (distance < CAPTURE_DISTANCE) {
     		return MAX_FREQUENCY;
     	}

@@ -9,8 +9,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import website.bloop.server.api.CapturedFlag;
 import website.bloop.server.api.Flag;
 import website.bloop.server.api.NearbyFlag;
+import website.bloop.server.api.PlacedFlag;
 import website.bloop.server.api.PlayerLocation;
 import website.bloop.server.jdbi.FlagDAO;
 import website.bloop.server.jdbi.NearbyFlagDAO;
@@ -32,8 +34,8 @@ public class FlagResource {
 	
 	@POST
 	@Path("/place")
-	public int addFlag(PlayerLocation location) {
-		return flagDAO.insertFlag(location);
+	public int addFlag(PlacedFlag flag) {
+		return flagDAO.insertFlag(flag);
 	}
 	
 	@GET
@@ -59,7 +61,7 @@ public class FlagResource {
 	
 	@POST
 	@Path("/capture")
-	public void captureFlag(@Valid NearbyFlag flag) {
+	public void captureFlag(@Valid CapturedFlag flag) {
 		flagDAO.captureFlag(flag);
 	}
 }

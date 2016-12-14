@@ -1,18 +1,22 @@
-\c bloop sam;
+\set user sam
+\set schema test
 
-DROP SCHEMA IF EXISTS test CASCADE;
+\c bloop :"user"
 
-CREATE SCHEMA test AUTHORIZATION sam;
+DROP SCHEMA IF EXISTS :"schema" CASCADE;
 
-SET search_path TO test;
+CREATE SCHEMA test AUTHORIZATION :"user";
 
-CREATE EXTENSION postgis;
+SET search_path TO :"schema";
+
+CREATE EXTENSION IF NOT EXISTS postgis;
 
 CREATE TABLE player
 (
 	player_id bigserial,
 	"name" text NOT NULL,
 	google_play_id text NOT NULL,
+	firebase_token text,
 	CONSTRAINT player_pk
 		PRIMARY KEY (player_id)
 );
@@ -21,7 +25,8 @@ CREATE TABLE flag
 (
 	flag_id bigserial,
 	player_id bigint NOT NULL,
-	location geography(point, 4326) NOT NULL,
+	"location" geography(point, 4326) NOT NULL,
+	color int NOT NULL,
 	time_placed timestamp with time zone NOT NULL DEFAULT now(),
 	is_captured boolean NOT NULL DEFAULT FALSE,
 	time_captured timestamp with time zone,
