@@ -14,12 +14,12 @@ public class BloopServerConfiguration extends Configuration {
     private DataSourceFactory database = new DataSourceFactory();
 
     @JsonProperty("database")
-	public DataSourceFactory getDataSourceFactory() {
-		return database;
-	}
+    public DataSourceFactory getDataSourceFactory() {
+        return database;
+    }
 
     @JsonProperty("database")
-	public void setDataSourceFactory(DataSourceFactory database) {
-		this.database = database;
-	}
+    public void setDataSourceFactory(DataSourceFactory database) {
+        this.database = database;
+    }
 }

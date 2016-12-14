@@ -5,19 +5,19 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PlacedFlag {
-	@NotNull
-	@JsonProperty
+    @NotNull
+    @JsonProperty
     private String googlePlayId;
 
-	@NotNull
+    @NotNull
     @JsonProperty
     private double latitude;
 
-	@NotNull
+    @NotNull
     @JsonProperty
     private double longitude;
 
-	@NotNull
+    @NotNull
     @JsonProperty
     private int color;
 

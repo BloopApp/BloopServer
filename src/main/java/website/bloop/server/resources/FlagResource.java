@@ -22,46 +22,46 @@ import website.bloop.server.jdbi.PlayerDAO;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class FlagResource {
-	FlagDAO flagDAO;
-	NearbyFlagDAO nearbyFlagDAO;
-	PlayerDAO playerDAO;
-	
-	public FlagResource(FlagDAO flagDAO, NearbyFlagDAO nearbyFlagDAO, PlayerDAO playerDAO) {
-		this.flagDAO = flagDAO;
-		this.nearbyFlagDAO = nearbyFlagDAO;
-		this.playerDAO = playerDAO;
-	}
-	
-	@POST
-	@Path("/place")
-	public int addFlag(PlacedFlag flag) {
-		return flagDAO.insertFlag(flag);
-	}
-	
-	@GET
-	@Path("/{id}")
-	public Flag getFlag(@PathParam("id") String id) {
-		return flagDAO.getFlag(Integer.parseInt(id));
-	}
-	
-	@POST
-	@Path("/nearby")
-	public NearbyFlag getNearestFlag(@Valid PlayerLocation location) {
-		NearbyFlag flag = nearbyFlagDAO.getNearestFlag(location);
-		if (flag != null) {
-			if (flag.getBloopFrequency() == NearbyFlag.MAX_FREQUENCY) {
-				flag.setPlayerName(playerDAO.getPlayerName(flag.getFlagId()));
-			}
-		} else {
-			flag = new NearbyFlag();
-			flag.setBloopFrequency(0);
-		}
-		return flag;
-	}
-	
-	@POST
-	@Path("/capture")
-	public void captureFlag(@Valid CapturedFlag flag) {
-		flagDAO.captureFlag(flag);
-	}
+    FlagDAO flagDAO;
+    NearbyFlagDAO nearbyFlagDAO;
+    PlayerDAO playerDAO;
+    
+    public FlagResource(FlagDAO flagDAO, NearbyFlagDAO nearbyFlagDAO, PlayerDAO playerDAO) {
+        this.flagDAO = flagDAO;
+        this.nearbyFlagDAO = nearbyFlagDAO;
+        this.playerDAO = playerDAO;
+    }
+    
+    @POST
+    @Path("/place")
+    public int addFlag(PlacedFlag flag) {
+        return flagDAO.insertFlag(flag);
+    }
+    
+    @GET
+    @Path("/{id}")
+    public Flag getFlag(@PathParam("id") String id) {
+        return flagDAO.getFlag(Integer.parseInt(id));
+    }
+    
+    @POST
+    @Path("/nearby")
+    public NearbyFlag getNearestFlag(@Valid PlayerLocation location) {
+        NearbyFlag flag = nearbyFlagDAO.getNearestFlag(location);
+        if (flag != null) {
+            if (flag.getBloopFrequency() == NearbyFlag.MAX_FREQUENCY) {
+                flag.setPlayerName(playerDAO.getPlayerName(flag.getFlagId()));
+            }
+        } else {
+            flag = new NearbyFlag();
+            flag.setBloopFrequency(0);
+        }
+        return flag;
+    }
+    
+    @POST
+    @Path("/capture")
+    public void captureFlag(@Valid CapturedFlag flag) {
+        flagDAO.captureFlag(flag);
+    }
 }

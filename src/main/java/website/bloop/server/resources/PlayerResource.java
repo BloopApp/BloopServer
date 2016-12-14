@@ -16,27 +16,27 @@ import website.bloop.server.jdbi.PlayerDAO;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PlayerResource {
-	PlayerDAO dao;
-	
-	public PlayerResource(PlayerDAO dao) {
-		this.dao = dao;
-	}
-	
-	@POST
-	@Path("/new")
-	public int addNewPlayer(@Valid Player player) {
-		return dao.addPlayer(player);
-	}
-	
-	@POST
-	@Path("/update-firebase")
-	public void updateFirebaseToken(@Valid Player player) {
-		dao.updateFirebaseToken(player);
-	}
-	
-	@GET
-	@Path("/{id}/numflags")
-	public int getCapturedFlags(@PathParam("id") String id) {
-		return dao.getFlagsCapturedByPlayer(Integer.parseInt(id));
-	}
+    PlayerDAO dao;
+    
+    public PlayerResource(PlayerDAO dao) {
+        this.dao = dao;
+    }
+    
+    @POST
+    @Path("/new")
+    public int addNewPlayer(@Valid Player player) {
+        return dao.addPlayer(player);
+    }
+    
+    @POST
+    @Path("/update-firebase")
+    public void updateFirebaseToken(@Valid Player player) {
+        dao.updateFirebaseToken(player);
+    }
+    
+    @GET
+    @Path("/{id}/numflags")
+    public int getCapturedFlags(@PathParam("id") String id) {
+        return dao.getFlagsCapturedByPlayer(Integer.parseInt(id));
+    }
 }
