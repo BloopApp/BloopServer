@@ -16,6 +16,11 @@ public interface PlayerDAO {
     @GetGeneratedKeys
     int addPlayer(@BindBean Player player);
     
+    @SqlQuery("SELECT EXISTS (SELECT 1 FROM flag WHERE player_id = " +
+              "(SELECT player_id FROM player WHERE google_play_id = :googlePlayId) " +
+              "AND captured = FALSE)")
+    boolean hasFlag(@Bind("googlePlayId") String googlePlayId);
+    
     @SqlUpdate("UPDATE player SET firebase_token = :firebaseToken " +
                "WHERE google_play_id = :googlePlayId")
     void updateFirebaseToken(@Bind("firebaseToken") Player player);
@@ -25,10 +30,7 @@ public interface PlayerDAO {
     String getPlayerName(@Bind("flagId") long flagId);
     
     @SqlQuery("SELECT count(*) FROM flag " +
-              "WHERE capturing_player_id = :playerId")
-    int getFlagsCapturedByPlayer(@Bind("playerId") long playerId);
-    
-    @SqlQuery("SELECT capturing_player_id, count(*) FROM flag " +
-              "GROUP BY capturing_player_id ORDER BY count DESC")
-    int getTopPlayers(); //TODO: implement a way to retrieve these records
+              "WHERE capturing_player_id = " +
+              "(SELECT player_id FROM player WHERE google_play_id = :googlePlayId)")
+    int getFlagsCapturedByPlayer(@Bind("googlePlayId") String googlePlayId);
 }

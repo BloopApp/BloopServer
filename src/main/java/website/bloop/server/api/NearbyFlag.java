@@ -16,10 +16,14 @@ public class NearbyFlag {
 
     @JsonProperty
     private String playerName;
+    
+    @JsonProperty
+    private int color;
 
-    public NearbyFlag(double distance, long flagId) {
+    public NearbyFlag(double distance, long flagId, int color) {
         this.bloopFrequency = calculateBloopFrequency(distance);
         this.flagId = flagId;
+        this.color = color;
     }
 
     public NearbyFlag() { }
@@ -46,6 +50,14 @@ public class NearbyFlag {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public double calculateBloopFrequency(double distance) {

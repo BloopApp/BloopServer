@@ -5,8 +5,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import website.bloop.server.api.Player;
@@ -35,8 +35,14 @@ public class PlayerResource {
     }
     
     @GET
-    @Path("/{id}/numflags")
-    public int getCapturedFlags(@PathParam("id") String id) {
-        return dao.getFlagsCapturedByPlayer(Integer.parseInt(id));
+    @Path("/num-flags")
+    public int getCapturedFlags(@QueryParam("id") String id) {
+        return dao.getFlagsCapturedByPlayer(id);
+    }
+    
+    @GET
+    @Path("/has-flag")
+    public boolean hasPlacedFlag(@QueryParam("id") String id) {
+        return dao.hasFlag(id);
     }
 }
