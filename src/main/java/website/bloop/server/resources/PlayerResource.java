@@ -2,6 +2,7 @@ package website.bloop.server.resources;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -62,7 +63,7 @@ public class PlayerResource {
         return ownFlag;
     }
     
-    @GET
+    @DELETE
     @Path("/delete-flag")
     public Response deleteFlag(@QueryParam("id") String id) {
         flagDAO.deleteFlag(id);
