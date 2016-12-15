@@ -5,11 +5,11 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CapturedFlag {
-	@NotNull
-	@JsonProperty
+    @NotNull
+    @JsonProperty
     private long flagId;
 
-	@NotNull
+    @NotNull
     @JsonProperty
     private String capturingPlayerId;
 

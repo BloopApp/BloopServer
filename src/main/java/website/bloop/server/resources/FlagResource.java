@@ -2,15 +2,13 @@ package website.bloop.server.resources;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import website.bloop.server.api.CapturedFlag;
-import website.bloop.server.api.Flag;
 import website.bloop.server.api.NearbyFlag;
 import website.bloop.server.api.PlacedFlag;
 import website.bloop.server.api.PlayerLocation;
@@ -34,14 +32,13 @@ public class FlagResource {
     
     @POST
     @Path("/place")
-    public int addFlag(PlacedFlag flag) {
-        return flagDAO.insertFlag(flag);
-    }
-    
-    @GET
-    @Path("/{id}")
-    public Flag getFlag(@PathParam("id") String id) {
-        return flagDAO.getFlag(Integer.parseInt(id));
+    public Response addFlag(@Valid PlacedFlag flag) {
+        if (!playerDAO.hasFlag(flag.getGooglePlayId())) {
+            flagDAO.insertFlag(flag);
+            return Response.ok().build();
+        } else {
+            return Response.status(403).build();
+        }
     }
     
     @POST
@@ -61,7 +58,8 @@ public class FlagResource {
     
     @POST
     @Path("/capture")
-    public void captureFlag(@Valid CapturedFlag flag) {
+    public Response captureFlag(@Valid CapturedFlag flag) {
         flagDAO.captureFlag(flag);
+        return Response.ok().build();
     }
 }
