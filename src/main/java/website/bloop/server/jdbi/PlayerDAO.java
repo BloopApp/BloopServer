@@ -18,8 +18,8 @@ public interface PlayerDAO {
     
     @SqlQuery("SELECT EXISTS (SELECT 1 FROM flag WHERE player_id = " +
               "(SELECT player_id FROM player WHERE google_play_id = :googlePlayId) " +
-              "AND captured = FALSE)")
-    boolean hasFlag(@Bind("googlePlayId") String googlePlayId);
+              "AND is_captured = FALSE)")
+    Boolean hasFlag(@Bind("googlePlayId") String googlePlayId);
     
     @SqlUpdate("UPDATE player SET firebase_token = :firebaseToken " +
                "WHERE google_play_id = :googlePlayId")

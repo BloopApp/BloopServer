@@ -38,6 +38,6 @@ public class BloopServerApplication extends Application<BloopServerConfiguration
         final PlayerDAO playerDAO = jdbi.onDemand(PlayerDAO.class);
         
         environment.jersey().register(new FlagResource(flagDAO, nearbyFlagDAO, playerDAO));
-        environment.jersey().register(new PlayerResource(playerDAO));
+        environment.jersey().register(new PlayerResource(playerDAO, flagDAO));
     }
 }
