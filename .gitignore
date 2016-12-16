@@ -3,4 +3,4 @@
 .classpath
 dependency-reduced-pom.xml
 config.yml
-
+.DS_Store
