@@ -65,7 +65,7 @@ public class NearbyFlag {
             return MAX_FREQUENCY;
         }
         if (distance > MAX_DISTANCE) {
-            distance = MAX_DISTANCE;
+            return 0;
         }
         return CAPTURE_DISTANCE * MAX_FREQUENCY / distance;
     }

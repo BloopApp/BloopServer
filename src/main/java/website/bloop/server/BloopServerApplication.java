@@ -1,8 +1,12 @@
 package website.bloop.server;
 
+import javax.ws.rs.client.Client;
+
 import org.skife.jdbi.v2.DBI;
 
 import io.dropwizard.Application;
+
+import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -37,7 +41,11 @@ public class BloopServerApplication extends Application<BloopServerConfiguration
         final NearbyFlagDAO nearbyFlagDAO = jdbi.onDemand(NearbyFlagDAO.class);
         final PlayerDAO playerDAO = jdbi.onDemand(PlayerDAO.class);
         
-        environment.jersey().register(new FlagResource(flagDAO, nearbyFlagDAO, playerDAO));
+        final Client client = new JerseyClientBuilder(environment).using(configuration.getJerseyClientConfiguration())
+                .build(getName());
+        final String firebaseKey = configuration.getFirebaseKey();
+        
+        environment.jersey().register(new FlagResource(flagDAO, nearbyFlagDAO, playerDAO, client, firebaseKey));
         environment.jersey().register(new PlayerResource(playerDAO, flagDAO));
     }
 }

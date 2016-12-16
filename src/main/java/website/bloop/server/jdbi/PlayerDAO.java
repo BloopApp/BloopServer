@@ -23,11 +23,18 @@ public interface PlayerDAO {
     
     @SqlUpdate("UPDATE player SET firebase_token = :firebaseToken " +
                "WHERE google_play_id = :googlePlayId")
-    void updateFirebaseToken(@Bind("firebaseToken") Player player);
+    void updateFirebaseToken(@BindBean Player player);
+    
+    @SqlQuery("SELECT firebase_token FROM player JOIN flag USING (player_id) " +
+              "WHERE flag_id = :flagId")
+    String getFirebaseToken(@Bind("flagId") long flagId);
     
     @SqlQuery("SELECT name FROM player JOIN flag USING (player_id) " +
               "WHERE flag_id = :flagId")
     String getPlayerName(@Bind("flagId") long flagId);
+    
+    @SqlQuery("SELECT name FROM player WHERE google_play_id = :googlePlayId")
+    String getPlayerName(@Bind("googlePlayId") String googlePlayId);
     
     @SqlQuery("SELECT count(*) FROM flag " +
               "WHERE capturing_player_id = " +
